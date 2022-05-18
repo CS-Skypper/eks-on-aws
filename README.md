@@ -1,4 +1,6 @@
-**Operate EKS Kubernetes at Production Scale with Terraform, Helm, Ingress, Jenkins, Prometheus, Grafana, Helmfile**
+# Premise
+Personal capstone project merging together some technologies that I've been looking around.
+We can see the creation of Kubernetes managed cluster (EKS) on AWS using Terraform. To enrich and automate the experience I used Helm Charts for deploying Ingress-Nginx as Ingress Controller, Metrics Server, Kube Prometheus Stack and Cluster Autoscaler. For the CI part I used Jenkins and for the CD part ArgoCD.
 
 ---
 
@@ -9,12 +11,10 @@
 - Use Helm as Infrastructure-as-Code to release Kubernetes applications
 - Install Core Applications on Kubernetes Cluster like Prometheus, Grafana and others
 - Authenticate to AWS EKS Cluster effectively
-- Run CI/CD pipeline using Jenkins with Production setup & Github integration
+- Run CI pipeline using Jenkins with Production setup & Github integration
+- ArgoCD for deploying into the Kubernetes Cluster
 
 ---
-
-# README and notes
-- 
 
 _few words on the project_
 # EKS on AWS
@@ -41,8 +41,6 @@ _few words on the project_
   1. its like an Operator
 
 ---
-
-
 
 ### Step 1 - Install Terraform
 - [cli](https://learn.hashicorp.com/tutorials/terraform/install-cli) or [docker image](https://hub.docker.com/r/hashicorp/terraform)

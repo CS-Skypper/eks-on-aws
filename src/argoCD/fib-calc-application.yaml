@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpa1 # apiVersion changes over time so keep an eye on the ArgoCD doc
+kind: Application
+metadata:
+  name: fib-calc-argo-application
+  namespace: argocd
+spec:
+  # can group multiple apps in one project; if not specified the name of the project it defaults to "default"
+  project: default 
+
+  source:
+    # git repo
+    repoURL: https://github.com/
+    ## HEAD = last commit in the git repo
+    targetRevision: HEAD 
+    ## the directory containing the manifest (YAML) files
+    path: dev
+  destination:
+    ## Endpoint of Kubernetes API Server
+    ## Since we run ArgoCD inside the destination cluster we can put the DNS of the API Server
+    server: https://kubernetes.default.svc
+    namespace: fib-calc
+
+  syncPolicy:
+    syncOptions:
+      ## automatically creates the namespace if it does not exist (fib-calc)
+    - CreateNamespace=true
+    
+    automated: # every 3 min polls git repo for changes
+      ## we can configure ArgoCD tot undo any manually changed done to the cluster
+      ## will apply always the actual state present on the git-repo/path: dev
+      selfHeal: true
+      ## if a manifest have been deleted from the path: dev Argo will delete that resource inside the Cluster
+      prune: true

@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  # You'll usually want to add your resources to the argocd namespace.
+  namespace: argocd-apps
+  # Add a this finalizer ONLY if you want these to cascade delete.
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # The project the application belongs to.
+  project: default
+
+  # Source of the application manifests
+  source:
+    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    targetRevision: HEAD
+    path: guestbook
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd-apps
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,0 +1,14 @@
+kind: Simple
+apiVersion: k3d.io/v1alpha2
+name: my-cluster2
+image: rancher/k3s
+servers: 3
+agents: 3
+ports:
+- port: 80:80
+  nodeFilters:
+  - loadbalancer
+options:
+  k3s:
+    extraServerArgs:
+    - --no-deploy=traefik

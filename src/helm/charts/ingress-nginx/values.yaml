@@ -1,0 +1,26 @@
+# ingress-controller requires a role in order to route traffic to any service
+## not quite sure about that, might need a deeper look
+rbac:
+  create: true
+
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      additionalLabels:
+        release: prometheus
+  service:
+    targetPorts:
+      http: http
+      https: http
+    annotations:
+      # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: # cert ARN
+      # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+      # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+      # service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        if ($http_x_forwarded_proto != 'https') {
+          return 301 https://$host$request_uri;
+        }

@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+  aws:
+    image: abdennour/aws
+    volumes:
+      - .:/code # best practice to mount the pwd to the volume
+      - aws-credentials:/root/.aws # writes to he volume and then reads it
+    restart: "no"
+    working_dir: /code
+
+  terraform:
+    image: hashicorp/terraform #:0.12.12
+    volumes:
+      - .:/code
+      - aws-credentials:/root/.aws
+    working_dir: /code
+    environment:
+      AWS_PROFILE: ${EKS_AWS_PROFILE}
+
+  kubectl:
+    image: abdennour/kubectl #:1.14.7-aws1.16.277
+    volumes:
+      - .:/code
+      - aws-credentials:/root/.aws:ro
+    restart: "no"
+    entrypoint: kubectl
+    environment:
+      AWS_PROFILE: ${EKS_AWS_PROFILE} # by default the user who creates the cluster is authorized to access it
+      KUBECONFIG: /code/kubeconfig_awesome
+    ports:
+    # machine : container
+    - 8090:8090
+  
+  helm:
+    image: abdennour/helm
+    restart: "no"
+    working_dir: /code
+    volumes:
+    - .:/code
+    - helm-config:/root/.config/helm
+    - helm-cache:/root/.cache/helm
+    - aws-credentials:/root/.aws:ro
+    environment:
+      KUBECONFIG: /code/kubeconfig_awesome
+      AWS_PROFILE: ${EKS_AWS_PROFILE}
+
+volumes: # define the volume
+  aws-credentials:
+    name: aws-credentials
+  helm-config:
+  helm-cache:

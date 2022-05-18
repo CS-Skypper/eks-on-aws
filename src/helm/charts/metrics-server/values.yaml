@@ -1,0 +1,4 @@
+args:
+  # With Kubernetes on AWS without this value set we would not be able to communicate with the Nodes
+  ## Why? Because the Nodes take the internal hostname resolution
+  - "--kubelet-preferred-address-types=InternalIP"

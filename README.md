@@ -1,6 +1,7 @@
 # Premise
 Personal capstone project merging together some technologies that I've been looking around.
 We can see the creation of Kubernetes managed cluster (EKS) on AWS using Terraform. To enrich and automate the experience I used Helm Charts for deploying Ingress-Nginx as Ingress Controller, Metrics Server, Kube Prometheus Stack and Cluster Autoscaler. For the CI part I used Jenkins and for the CD part ArgoCD.
+All around in a GitOps style.
 
 ---
 

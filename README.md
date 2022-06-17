@@ -50,11 +50,11 @@ _few words on the project_
   - ```bash
     docker run -it --rm hashicorp/terraform:0.12.12 --version
     ```
-- check the following [instructions](auth-tf-aws/authenticate-terraform-to-aws.md)
+- check the following [instructions](./doc/auth-terraform-aws.md)
   
 
 ### Step 2 - Install Helm
-- check the following [instructions](helm_overview/helm_overview.md)
+- check the following [instructions](./doc/helm_overview.md)
 
 ### Step 3 - Create a local Kubernetes Cluster with K3D / KinD
    - [k3d](./../src/k3d)
@@ -69,7 +69,7 @@ _few words on the project_
 #### 1. [Metrics-Server](https://github.com/helm/charts/tree/master/stable/metrics-server)
    1. it collects metrics of nodes and pods so it is mandatory to set up autoscaling policies
 
-#### 2. [Cluster Autoscaler]()
+#### 2. [Cluster Autoscaler](https://github.com/kubernetes/autoscaler)
   1. it requires metrics-server
   2. [chart value used](./helm_overview/charts/cluster-autoscaler/values.yaml)
      1. [cluster-autoscaler chart](https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler)
